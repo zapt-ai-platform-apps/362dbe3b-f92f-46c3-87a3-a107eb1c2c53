@@ -15,11 +15,11 @@ function App() {
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `قم بإنشاء كود لموقع ويب احترافي باللغة العربية يدعم جميع لغات البرمجة بناءً على الوصف التالي:\n${projectDescription()}\nأعد الكود داخل مجلد مضغوط بصيغة base64.`,
-        response_type: 'json'
+        prompt: `قم بإنشاء كود HTML لموقع ويب احترافي باللغة العربية بناءً على الوصف التالي:\n${projectDescription()}\n`,
+        response_type: 'text'
       });
-      if (result && result.base64_zip) {
-        setGeneratedCode(result.base64_zip);
+      if (result) {
+        setGeneratedCode(result);
       } else {
         alert('حدث خطأ أثناء إنشاء الكود. يرجى المحاولة مرة أخرى.');
       }
@@ -32,11 +32,8 @@ function App() {
   };
 
   const handleDownloadCode = () => {
-    const byteCharacters = atob(generatedCode());
-    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'application/zip' });
-    saveAs(blob, 'project.zip');
+    const blob = new Blob([generatedCode()], { type: 'text/html;charset=utf-8' });
+    saveAs(blob, 'index.html');
   };
 
   return (
@@ -68,12 +65,15 @@ function App() {
 
         <Show when={generatedCode()}>
           <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold mb-4 text-purple-600">تحميل الكود المولد</h2>
+            <h2 class="text-2xl font-bold mb-4 text-purple-600">الكود المولد</h2>
+            <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
+              <code>{generatedCode()}</code>
+            </pre>
             <button
               onClick={handleDownloadCode}
-              class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+              class="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
             >
-              تحميل الكود كاملاً في ملف Zip
+              تحميل الكود كملف HTML
             </button>
           </div>
         </Show>
