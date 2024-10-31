@@ -4,19 +4,30 @@ import { saveAs } from 'file-saver';
 import DOMPurify from 'dompurify';
 
 function App() {
+  const [projectName, setProjectName] = createSignal('');
+  const [projectType, setProjectType] = createSignal('');
   const [projectDescription, setProjectDescription] = createSignal('');
   const [loading, setLoading] = createSignal(false);
   const [generatedCode, setGeneratedCode] = createSignal('');
 
+  const projectTypes = [
+    'موقع تجاري',
+    'مدونة شخصية',
+    'موقع إخباري',
+    'موقع محفظة أعمال',
+    'موقع تعليمي',
+    'متجر إلكتروني',
+  ];
+
   const handleGenerateCode = async () => {
-    if (!projectDescription()) {
-      alert('يرجى إدخال وصف للمشروع.');
+    if (!projectName() || !projectType() || !projectDescription()) {
+      alert('يرجى إدخال اسم المشروع، اختيار نوع المشروع، ووصف للمشروع.');
       return;
     }
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `قم بإنشاء كود HTML لموقع ويب احترافي باللغة العربية بناءً على الوصف التالي:\n${projectDescription()}\n`,
+        prompt: `قم بإنشاء كود HTML لموقع ويب احترافي باللغة العربية باسم "${projectName()}", نوعه "${projectType()}", وبناءً على الوصف التالي:\n${projectDescription()}\n`,
         response_type: 'text'
       });
       if (result) {
@@ -40,19 +51,36 @@ function App() {
   const sanitizedHTML = () => DOMPurify.sanitize(generatedCode());
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4">
+    <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
       <div class="max-w-4xl mx-auto h-full">
         <div class="flex justify-between items-center mb-8">
           <h1 class="text-4xl font-bold text-purple-600">منشئ المواقع الاحترافي</h1>
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-2xl font-bold mb-4 text-purple-600">وصف المشروع</h2>
+          <h2 class="text-2xl font-bold mb-4 text-purple-600">تفاصيل المشروع</h2>
+          <input
+            type="text"
+            placeholder="اسم المشروع"
+            value={projectName()}
+            onInput={(e) => setProjectName(e.target.value)}
+            class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
+          />
+          <select
+            value={projectType()}
+            onInput={(e) => setProjectType(e.target.value)}
+            class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
+          >
+            <option value="" disabled selected>اختر نوع المشروع</option>
+            {projectTypes.map((type) => (
+              <option value={type}>{type}</option>
+            ))}
+          </select>
           <textarea
             placeholder="أدخل وصفًا للموقع الذي تريد إنشاءه"
             value={projectDescription()}
             onInput={(e) => setProjectDescription(e.target.value)}
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
             rows="5"
           />
           <button
