@@ -1,6 +1,7 @@
 import { createSignal, Show } from 'solid-js';
 import { createEvent } from './supabaseClient';
 import { saveAs } from 'file-saver';
+import DOMPurify from 'dompurify';
 
 function App() {
   const [projectDescription, setProjectDescription] = createSignal('');
@@ -36,6 +37,8 @@ function App() {
     saveAs(blob, 'index.html');
   };
 
+  const sanitizedHTML = () => DOMPurify.sanitize(generatedCode());
+
   return (
     <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4">
       <div class="max-w-4xl mx-auto h-full">
@@ -65,10 +68,10 @@ function App() {
 
         <Show when={generatedCode()}>
           <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold mb-4 text-purple-600">الكود المولد</h2>
-            <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-              <code>{generatedCode()}</code>
-            </pre>
+            <h2 class="text-2xl font-bold mb-4 text-purple-600">معاينة الموقع</h2>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <div innerHTML={sanitizedHTML()} />
+            </div>
             <button
               onClick={handleDownloadCode}
               class="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
