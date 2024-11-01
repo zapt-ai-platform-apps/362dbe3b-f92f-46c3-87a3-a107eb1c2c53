@@ -1,12 +1,14 @@
-import { createSignal, Show, For } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { createEvent } from './supabaseClient';
+import Header from './components/Header';
+import ProjectForm from './components/ProjectForm';
+import Preview from './components/Preview';
+import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import DOMPurify from 'dompurify';
-import JSZip from 'jszip';
 
 function App() {
   const [projectName, setProjectName] = createSignal('');
-  const [projectLanguages, setProjectLanguages] = createSignal([]);
   const [selectedLanguages, setSelectedLanguages] = createSignal([]);
   const [projectType, setProjectType] = createSignal('');
   const [projectRequirements, setProjectRequirements] = createSignal('');
@@ -92,87 +94,28 @@ function App() {
   };
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
+    <div class="h-full bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
       <div class="max-w-4xl mx-auto h-full">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-4xl font-bold text-purple-600">منشئ المواقع الاحترافي</h1>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-2xl font-bold mb-4 text-purple-600">تفاصيل المشروع</h2>
-          <input
-            type="text"
-            placeholder="اسم المشروع"
-            value={projectName()}
-            onInput={(e) => setProjectName(e.target.value)}
-            class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
-          />
-
-          <div class="mb-4">
-            <p class="mb-2 font-semibold text-gray-700">اختر لغات البرمجة:</p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-              <For each={availableLanguages}>
-                {(language) => (
-                  <label class="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={selectedLanguages().includes(language)}
-                      onChange={() => toggleLanguage(language)}
-                      class="cursor-pointer"
-                    />
-                    <span>{language}</span>
-                  </label>
-                )}
-              </For>
-            </div>
-          </div>
-
-          <select
-            value={projectType()}
-            onInput={(e) => setProjectType(e.target.value)}
-            class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
-          >
-            <option value="" disabled selected>اختر نوع الموقع</option>
-            <For each={projectTypes}>
-              {(type) => (
-                <option value={type}>{type}</option>
-              )}
-            </For>
-          </select>
-
-          <textarea
-            placeholder="حدد متطلباتك وميزات الموقع الذي تريد إنشاءه"
-            value={projectRequirements()}
-            onInput={(e) => setProjectRequirements(e.target.value)}
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
-            rows="5"
-          />
-
-          <button
-            onClick={handleGenerateCode}
-            class={`mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={loading()}
-          >
-            <Show when={loading()} fallback="إنشاء الموقع باستخدام الذكاء الاصطناعي">
-              جاري الإنشاء...
-            </Show>
-          </button>
-        </div>
-
-        <Show when={Object.keys(generatedFiles()).length > 0}>
-          <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-2xl font-bold mb-4 text-purple-600">معاينة الموقع</h2>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <iframe srcDoc={sanitizedHTML()} class="w-full h-96"></iframe>
-            </div>
-            <button
-              onClick={handleDownloadCode}
-              class="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
-            >
-              تحميل الكود كملف مضغوط
-            </button>
-          </div>
-        </Show>
+        <Header />
+        <ProjectForm
+          projectName={projectName}
+          setProjectName={setProjectName}
+          availableLanguages={availableLanguages}
+          selectedLanguages={selectedLanguages}
+          toggleLanguage={toggleLanguage}
+          projectTypes={projectTypes}
+          projectType={projectType}
+          setProjectType={setProjectType}
+          projectRequirements={projectRequirements}
+          setProjectRequirements={setProjectRequirements}
+          loading={loading}
+          handleGenerateCode={handleGenerateCode}
+        />
+        <Preview
+          generatedFiles={generatedFiles}
+          sanitizedHTML={sanitizedHTML}
+          handleDownloadCode={handleDownloadCode}
+        />
       </div>
     </div>
   );
