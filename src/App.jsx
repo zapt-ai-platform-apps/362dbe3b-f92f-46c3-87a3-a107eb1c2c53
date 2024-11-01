@@ -48,8 +48,8 @@ function App() {
     setLoading(true);
     try {
       const selectedLangsStr = selectedLanguages().join(', ');
-      const prompt = `قم بإنشاء مشروع برمجي بلغة${selectedLanguages().length > 1 ? 'ات' : ''} "${selectedLangsStr}" لموقع ${projectType()} باسم "${projectName()}". يجب أن يلبي المتطلبات التالية:\n${projectRequirements()}\n
-      قم بتقسيم الكود إلى ملفات منفصلة حسب اللغة والوظيفة (مثل index.html، styles.css، script.js)، وأرسل الكود ككائن JSON بالمفتاح كأسماء الملفات والقيم كمحتوى الملفات.`;
+      const prompt = `قم بإنشاء مشروع برمجي يستخدم لغات البرمجة "${selectedLangsStr}" لموقع ${projectType()} باسم "${projectName()}". يجب أن يلبي المتطلبات التالية:\n${projectRequirements()}\n
+      تأكد من دمج جميع لغات البرمجة المحددة بشكل مناسب في المشروع. قم بتقسيم الكود إلى ملفات منفصلة حسب اللغة والوظيفة (مثل index.html، styles.css، script.js)، وأرسل الكود ككائن JSON بالمفتاح كأسماء الملفات والقيم كمحتوى الملفات.`;
 
       const result = await createEvent('chatgpt_request', {
         prompt: prompt,
@@ -94,7 +94,7 @@ function App() {
   };
 
   return (
-    <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
+    <div class="h-full bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
       <div class="max-w-4xl mx-auto h-full">
         <Header />
         <ProjectForm
