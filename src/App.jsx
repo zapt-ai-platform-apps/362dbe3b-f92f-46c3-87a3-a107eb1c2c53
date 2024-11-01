@@ -94,7 +94,7 @@ function App() {
   };
 
   return (
-    <div class="h-full bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
+    <div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-black">
       <div class="max-w-4xl mx-auto h-full">
         <Header />
         <ProjectForm

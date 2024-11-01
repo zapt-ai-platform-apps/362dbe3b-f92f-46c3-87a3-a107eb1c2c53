@@ -32,7 +32,7 @@ function ProjectForm(props) {
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
           <For each={availableLanguages}>
             {(language) => (
-              <label class="flex items-center space-x-2">
+              <label class="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={selectedLanguages().includes(language)}
@@ -51,11 +51,11 @@ function ProjectForm(props) {
         onInput={(e) => setProjectType(e.target.value)}
         class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black"
       >
-        <option value="" disabled selected>اختر نوع الموقع</option>
+        <option value="" disabled selected>
+          اختر نوع الموقع
+        </option>
         <For each={projectTypes}>
-          {(type) => (
-            <option value={type}>{type}</option>
-          )}
+          {(type) => <option value={type}>{type}</option>}
         </For>
       </select>
 
@@ -69,7 +69,7 @@ function ProjectForm(props) {
 
       <button
         onClick={handleGenerateCode}
-        class={`mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+        class={`mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
         disabled={loading()}
       >
         <Show when={loading()} fallback="إنشاء الموقع باستخدام الذكاء الاصطناعي">
