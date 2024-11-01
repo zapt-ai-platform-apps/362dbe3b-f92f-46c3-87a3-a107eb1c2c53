@@ -17,7 +17,7 @@
     "file-saver": "^2.0.5",
     "dompurify": "^2.4.0",
     "jszip": "^3.10.1",
-    "solid-i18n": "^0.5.3"
+    "solid-i18n": "^0.4.0"
   },
   "devDependencies": {
     "vite": "^5.4.7",
