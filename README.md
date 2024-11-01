@@ -1,4 +1,4 @@
-# Professional Website Builder
+# New App
 
 A web application that allows you to easily create professional websites using AI. With a simple and organized interface, you can specify your project details such as the name, the programming languages you wish to incorporate, the type of website, your specific requirements, and choose your preferred language (Arabic, French, or English). The application generates the necessary code for your website, with the ability to preview and download it.
 
@@ -45,3 +45,13 @@ A web application that allows you to easily create professional websites using A
 - **FileSaver.js Library**: Used to download the code as a ZIP file to your device.
 - **JSZip Library**: Used to create a ZIP file containing all the generated project files.
 - **solid-i18n Library**: Used to provide multilingual support, allowing the application to display content in Arabic, French, or English.
+
+## Environment Variables
+
+The following environment variables are required for the application to function correctly:
+
+- `VITE_PUBLIC_APP_ID`: Your Zapt application ID.
+- `VITE_PUBLIC_APP_ENV`: The application environment (e.g., 'production', 'development').
+- `VITE_PUBLIC_SENTRY_DSN`: Sentry Data Source Name for error logging.
+
+These variables should be set in a `.env` file in the root directory of the project.

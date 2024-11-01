@@ -2,7 +2,7 @@ import { createI18nContext } from 'solid-i18n';
 
 const dict = {
   en: {
-    app_title: 'Professional Website Builder',
+    app_title: 'New App',
     project_details: 'Project Details',
     project_name: 'Project Name',
     select_languages: 'Select Programming Languages:',
@@ -18,7 +18,7 @@ const dict = {
     prompt_template: `Create a software project using "{languages}" languages for a {project_type} named "{project_name}". It should meet the following requirements:\n{requirements}\nEnsure all specified programming languages are appropriately integrated in the project. Split the code into separate files according to language and functionality (e.g., index.html, styles.css, script.js), and send the code as a JSON object with filenames as keys and file contents as values.`,
   },
   ar: {
-    app_title: 'منشئ المواقع الاحترافي',
+    app_title: 'تطبيق جديد',
     project_details: 'تفاصيل المشروع',
     project_name: 'اسم المشروع',
     select_languages: 'اختر لغات البرمجة:',
@@ -34,7 +34,7 @@ const dict = {
     prompt_template: `قم بإنشاء مشروع برمجي يستخدم لغات البرمجة "{languages}" لموقع {project_type} باسم "{project_name}". يجب أن يلبي المتطلبات التالية:\n{requirements}\nتأكد من دمج جميع لغات البرمجة المحددة بشكل مناسب في المشروع. قم بتقسيم الكود إلى ملفات منفصلة حسب اللغة والوظيفة (مثل index.html، styles.css، script.js)، وأرسل الكود ككائن JSON بالمفتاح كأسماء الملفات والقيم كمحتوى الملفات.`,
   },
   fr: {
-    app_title: 'Constructeur de sites web professionnel',
+    app_title: 'Nouvelle Application',
     project_details: 'Détails du projet',
     project_name: 'Nom du projet',
     select_languages: 'Sélectionnez les langages de programmation:',
