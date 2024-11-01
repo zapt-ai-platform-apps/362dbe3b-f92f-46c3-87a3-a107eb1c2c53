@@ -1,14 +1,21 @@
-import { createSignal, Show } from 'solid-js';
+import { createSignal, Show, For } from 'solid-js';
 import { createEvent } from './supabaseClient';
 import { saveAs } from 'file-saver';
 import DOMPurify from 'dompurify';
 
 function App() {
   const [projectName, setProjectName] = createSignal('');
+  const [projectLanguage, setProjectLanguage] = createSignal('');
   const [projectType, setProjectType] = createSignal('');
   const [projectDescription, setProjectDescription] = createSignal('');
   const [loading, setLoading] = createSignal(false);
   const [generatedCode, setGeneratedCode] = createSignal('');
+
+  const projectLanguages = [
+    'العربية',
+    'الفرنسية',
+    'الإنجليزية',
+  ];
 
   const projectTypes = [
     'موقع تجاري',
@@ -20,14 +27,14 @@ function App() {
   ];
 
   const handleGenerateCode = async () => {
-    if (!projectName() || !projectType() || !projectDescription()) {
-      alert('يرجى إدخال اسم المشروع، اختيار نوع المشروع، ووصف للمشروع.');
+    if (!projectName() || !projectLanguage() || !projectType() || !projectDescription()) {
+      alert('يرجى إدخال اسم المشروع، اختيار لغة المشروع، نوع المشروع، ووصف للمشروع.');
       return;
     }
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `قم بإنشاء كود HTML لموقع ويب احترافي باللغة العربية باسم "${projectName()}", نوعه "${projectType()}", وبناءً على الوصف التالي:\n${projectDescription()}\n`,
+        prompt: `قم بإنشاء كود HTML لموقع ويب احترافي باسم "${projectName()}", لغة الموقع "${projectLanguage()}", نوعه "${projectType()}", وبناءً على الوصف التالي:\n${projectDescription()}\n`,
         response_type: 'text'
       });
       if (result) {
@@ -67,14 +74,28 @@ function App() {
             class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
           />
           <select
+            value={projectLanguage()}
+            onInput={(e) => setProjectLanguage(e.target.value)}
+            class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
+          >
+            <option value="" disabled selected>اختر لغة المشروع</option>
+            <For each={projectLanguages}>
+              {(language) => (
+                <option value={language}>{language}</option>
+              )}
+            </For>
+          </select>
+          <select
             value={projectType()}
             onInput={(e) => setProjectType(e.target.value)}
             class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border"
           >
             <option value="" disabled selected>اختر نوع المشروع</option>
-            {projectTypes.map((type) => (
-              <option value={type}>{type}</option>
-            ))}
+            <For each={projectTypes}>
+              {(type) => (
+                <option value={type}>{type}</option>
+              )}
+            </For>
           </select>
           <textarea
             placeholder="أدخل وصفًا للموقع الذي تريد إنشاءه"
