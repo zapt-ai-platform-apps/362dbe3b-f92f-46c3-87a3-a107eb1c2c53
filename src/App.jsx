@@ -6,6 +6,7 @@ import Preview from './components/Preview';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import DOMPurify from 'dompurify';
+import { useI18n } from 'solid-i18n';
 
 function App() {
   const [projectName, setProjectName] = createSignal('');
@@ -14,6 +15,7 @@ function App() {
   const [projectRequirements, setProjectRequirements] = createSignal('');
   const [loading, setLoading] = createSignal(false);
   const [generatedFiles, setGeneratedFiles] = createSignal({});
+  const [t, { locale }] = useI18n();
 
   const availableLanguages = [
     'HTML',
@@ -24,27 +26,34 @@ function App() {
   ];
 
   const projectTypes = [
-    'موقع تجاري',
-    'مدونة شخصية',
-    'موقع إخباري',
-    'موقع محفظة أعمال',
-    'موقع تعليمي',
-    'متجر إلكتروني',
-    'تطبيق ويب',
-    'منتدى',
-    'شبكة اجتماعية',
+    { value: 'business_website', label: { ar: 'موقع تجاري', en: 'Business Website', fr: 'Site Web d\'entreprise' } },
+    { value: 'personal_blog', label: { ar: 'مدونة شخصية', en: 'Personal Blog', fr: 'Blog personnel' } },
+    { value: 'news_website', label: { ar: 'موقع إخباري', en: 'News Website', fr: 'Site d\'actualités' } },
+    { value: 'portfolio', label: { ar: 'موقع محفظة أعمال', en: 'Portfolio Website', fr: 'Site de portfolio' } },
+    { value: 'educational', label: { ar: 'موقع تعليمي', en: 'Educational Website', fr: 'Site éducatif' } },
+    { value: 'ecommerce', label: { ar: 'متجر إلكتروني', en: 'E-commerce Website', fr: 'Site e-commerce' } },
+    { value: 'web_app', label: { ar: 'تطبيق ويب', en: 'Web Application', fr: 'Application Web' } },
+    { value: 'forum', label: { ar: 'منتدى', en: 'Forum', fr: 'Forum' } },
+    { value: 'social_network', label: { ar: 'شبكة اجتماعية', en: 'Social Network', fr: 'Réseau social' } },
   ];
 
   const handleGenerateCode = async () => {
     if (!projectName() || selectedLanguages().length === 0 || !projectType() || !projectRequirements()) {
-      alert('يرجى إدخال اسم المشروع، اختيار لغات البرمجة، نوع المشروع، وتحديد المتطلبات.');
+      alert(t('enter_all_fields'));
       return;
     }
     setLoading(true);
     try {
       const selectedLangsStr = selectedLanguages().join(', ');
-      const prompt = `قم بإنشاء مشروع برمجي يستخدم لغات البرمجة "${selectedLangsStr}" لموقع ${projectType()} باسم "${projectName()}". يجب أن يلبي المتطلبات التالية:\n${projectRequirements()}\n
-      تأكد من دمج جميع لغات البرمجة المحددة بشكل مناسب في المشروع. قم بتقسيم الكود إلى ملفات منفصلة حسب اللغة والوظيفة (مثل index.html، styles.css، script.js)، وأرسل الكود ككائن JSON بالمفتاح كأسماء الملفات والقيم كمحتوى الملفات.`;
+
+      const selectedProjectTypeLabel = projectTypes.find((type) => type.value === projectType()).label[locale()];
+
+      const prompt = t('prompt_template', {
+        languages: selectedLangsStr,
+        project_type: selectedProjectTypeLabel,
+        project_name: projectName(),
+        requirements: projectRequirements(),
+      });
 
       const result = await createEvent('chatgpt_request', {
         prompt: prompt,
@@ -54,11 +63,11 @@ function App() {
       if (result) {
         setGeneratedFiles(result);
       } else {
-        alert('حدث خطأ أثناء إنشاء الكود. يرجى المحاولة مرة أخرى.');
+        alert(t('error_generating_code'));
       }
     } catch (error) {
       console.error('Error generating code:', error);
-      alert('حدث خطأ أثناء إنشاء الكود. يرجى المحاولة مرة أخرى.');
+      alert(t('error_generating_code'));
     } finally {
       setLoading(false);
     }

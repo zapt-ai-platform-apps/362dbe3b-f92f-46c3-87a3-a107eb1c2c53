@@ -1,42 +1,47 @@
-# منشئ المواقع الاحترافي
+# Professional Website Builder
 
-تطبيق ويب يتيح لك إنشاء مواقع ويب احترافية بسهولة باستخدام الذكاء الاصطناعي. من خلال واجهة بسيطة ومنظمة، يمكنك تحديد تفاصيل مشروعك مثل الاسم، لغات البرمجة التي ترغب في دمجها، نوع الموقع، ومتطلباتك الخاصة. يقوم التطبيق بإنشاء الكود المطلوب لموقعك، مع إمكانية معاينته وتنزيله.
+A web application that allows you to easily create professional websites using AI. With a simple and organized interface, you can specify your project details such as the name, the programming languages you wish to incorporate, the type of website, your specific requirements, and choose your preferred language (Arabic, French, or English). The application generates the necessary code for your website, with the ability to preview and download it.
 
-## كيفية استخدام التطبيق
+## How to Use the Application
 
-1. **إدخال تفاصيل المشروع**
+1. **Select the Application Language**
 
-   - **اسم المشروع**: أدخل اسمًا لمشروعك في الحقل المخصص.
-   - **اختيار لغات البرمجة**: حدد لغات البرمجة التي ترغب في استخدامها من بين الخيارات المتاحة (مثل: HTML، CSS، JavaScript، TypeScript، PHP). يمكنك اختيار لغة واحدة أو دمج عدة لغات.
-   - **نوع الموقع**: اختر نوع الموقع الذي تريد إنشاؤه من القائمة المنسدلة (مثل موقع تجاري، مدونة شخصية، متجر إلكتروني، إلخ).
-   - **متطلبات المشروع**: أدخل التفاصيل والمتطلبات الخاصة بموقعك في حقل النص، مثل التصميم المطلوب، الوظائف، المميزات، وأي تفضيلات أخرى.
+   - At the top of the page, there's a language selection dropdown. Choose your preferred language from Arabic, French, or English.
 
-2. **إنشاء الموقع باستخدام الذكاء الاصطناعي**
+2. **Enter Project Details**
 
-   - بعد إدخال جميع التفاصيل، اضغط على زر "**إنشاء الموقع باستخدام الذكاء الاصطناعي**".
-   - سيبدأ التطبيق في معالجة طلبك. يرجى الانتظار حتى يتم الانتهاء من الإنشاء. أثناء ذلك، ستظهر رسالة "جاري الإنشاء...".
+   - **Project Name**: Enter a name for your project in the designated field.
+   - **Select Programming Languages**: Choose the programming languages you wish to use from the available options (e.g., HTML, CSS, JavaScript, TypeScript, PHP). You can select one or combine multiple languages.
+   - **Project Type**: Select the type of website you want to create from the dropdown list (e.g., Business Website, Personal Blog, E-commerce Store, etc.).
+   - **Project Requirements**: Enter the details and specific requirements for your website in the text field, such as desired design, functionalities, features, and any other preferences.
 
-3. **معاينة الموقع**
+3. **Generate the Website Using AI**
 
-   - بعد الانتهاء من إنشاء الكود، ستظهر لك معاينة للموقع الذي تم إنشاؤه بناءً على متطلباتك ولغات البرمجة المدمجة التي اخترتها.
-   - يمكنك استعراض الموقع داخل الإطار المخصص للتأكد من أنه يلبي احتياجاتك.
+   - After entering all the details, click on the "**Generate Website using AI**" button.
+   - The application will start processing your request. Please wait until the generation is complete. During this time, a message "Generating..." will appear.
 
-4. **تحميل الكود**
+4. **Preview the Website**
 
-   - إذا كنت راضيًا عن الموقع المولد، يمكنك تنزيل الكود الخاص به.
-   - اضغط على زر "**تحميل الكود كملف مضغوط**".
-   - سيتم تنزيل ملف مضغوط يحتوي على جميع الملفات اللازمة لموقعك (مثل index.html، styles.css، script.js، إلخ).
+   - Once the code generation is complete, a preview of the generated website based on your requirements and selected programming languages will be displayed.
+   - You can browse the website within the designated frame to ensure it meets your needs.
 
-## ملاحظات
+5. **Download the Code**
 
-- **كلما كانت التفاصيل أوضح، كانت النتائج أكثر دقة**: تأكد من إدخال متطلباتك بشكل دقيق للحصول على موقع يلبي توقعاتك.
-- يمكنك **دمج لغات برمجة متعددة** للحصول على موقع أكثر ديناميكية وتفاعلية.
-- قد تحتاج إلى **تعديلات إضافية** على الكود بعد التنزيل لتخصيص الموقع بشكل أكبر.
-- إذا واجهت أي مشاكل أو كانت لديك استفسارات، لا تتردد في التواصل معنا.
+   - If you're satisfied with the generated website, you can download its code.
+   - Click on the "**Download Code as ZIP**" button.
+   - A ZIP file containing all the necessary files for your website (e.g., index.html, styles.css, script.js, etc.) will be downloaded.
 
-## الخدمات الخارجية المستخدمة
+## Notes
 
-- **واجهة ChatGPT API**: تُستخدم لإنشاء الكود بناءً على تفاصيل المشروع التي تقدمها، مع دمج لغات البرمجة المختارة.
-- **مكتبة DOMPurify**: تُستخدم لتنقية وعرض الكود المولد بأمان داخل التطبيق.
-- **مكتبة FileSaver.js**: تُستخدم لتنزيل الكود كملف مضغوط على جهازك.
-- **مكتبة JSZip**: تُستخدم لإنشاء ملف مضغوط يحتوي على جميع ملفات المشروع المولدة.
+- **The clearer the details, the more accurate the results**: Make sure to enter your requirements precisely to get a website that meets your expectations.
+- You can **combine multiple programming languages** to create a more dynamic and interactive website.
+- You may need to **make additional adjustments** to the code after downloading to further customize the website.
+- If you encounter any issues or have questions, feel free to contact us.
+
+## External Services Used
+
+- **ChatGPT API**: Used to generate the code based on the project details you provide, incorporating the selected programming languages.
+- **DOMPurify Library**: Used to safely sanitize and display the generated code within the application.
+- **FileSaver.js Library**: Used to download the code as a ZIP file to your device.
+- **JSZip Library**: Used to create a ZIP file containing all the generated project files.
+- **solid-i18n Library**: Used to provide multilingual support, allowing the application to display content in Arabic, French, or English.

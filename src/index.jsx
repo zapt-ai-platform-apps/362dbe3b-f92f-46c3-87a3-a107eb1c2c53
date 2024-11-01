@@ -2,6 +2,8 @@ import { render } from 'solid-js/web';
 import App from './App';
 import './index.css';
 import * as Sentry from "@sentry/browser";
+import { I18nProvider } from 'solid-i18n';
+import i18nContext from './i18n';
 
 Sentry.init({
   dsn: import.meta.env.VITE_PUBLIC_SENTRY_DSN,
@@ -26,4 +28,8 @@ script.setAttribute('src', 'https://progressier.app/z8yY3IKmfpDIw3mSncPh/script.
 script.setAttribute('defer', 'true');
 document.querySelector('head').appendChild(script);
 
-render(() => <App />, document.getElementById('root'));
+render(() => (
+  <I18nProvider i18n={i18nContext}>
+    <App />
+  </I18nProvider>
+), document.getElementById('root'));

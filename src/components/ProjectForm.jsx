@@ -1,4 +1,5 @@
 import { For, Show } from 'solid-js';
+import { useI18n } from 'solid-i18n';
 
 function ProjectForm(props) {
   const {
@@ -16,19 +17,21 @@ function ProjectForm(props) {
     handleGenerateCode,
   } = props;
 
+  const [t, { locale }] = useI18n();
+
   return (
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold mb-4 text-purple-600">تفاصيل المشروع</h2>
+      <h2 class="text-2xl font-bold mb-4 text-purple-600">{t('project_details')}</h2>
       <input
         type="text"
-        placeholder="اسم المشروع"
+        placeholder={t('project_name')}
         value={projectName()}
         onInput={(e) => setProjectName(e.target.value)}
         class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black"
       />
 
       <div class="mb-4">
-        <p class="mb-2 font-semibold text-gray-700">اختر لغات البرمجة:</p>
+        <p class="mb-2 font-semibold text-gray-700">{t('select_languages')}</p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
           <For each={availableLanguages}>
             {(language) => (
@@ -49,18 +52,20 @@ function ProjectForm(props) {
       <select
         value={projectType()}
         onInput={(e) => setProjectType(e.target.value)}
-        class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black"
+        class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black cursor-pointer"
       >
         <option value="" disabled selected>
-          اختر نوع الموقع
+          {t('select_project_type')}
         </option>
         <For each={projectTypes}>
-          {(type) => <option value={type}>{type}</option>}
+          {(type) => (
+            <option value={type.value}>{type.label[locale()]}</option>
+          )}
         </For>
       </select>
 
       <textarea
-        placeholder="حدد متطلباتك وميزات الموقع الذي تريد إنشاءه"
+        placeholder={t('specify_requirements')}
         value={projectRequirements()}
         onInput={(e) => setProjectRequirements(e.target.value)}
         class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-black"
@@ -74,8 +79,8 @@ function ProjectForm(props) {
         }`}
         disabled={loading()}
       >
-        <Show when={loading()} fallback="إنشاء الموقع باستخدام الذكاء الاصطناعي">
-          جاري الإنشاء...
+        <Show when={loading()} fallback={t('generate_website')}>
+          {t('generating')}
         </Show>
       </button>
     </div>
