@@ -19,13 +19,8 @@ function App() {
     'HTML',
     'CSS',
     'JavaScript',
-    'Python',
-    'Ruby',
-    'PHP',
-    'Java',
-    'C#',
-    'C++',
     'TypeScript',
+    'PHP',
   ];
 
   const projectTypes = [
